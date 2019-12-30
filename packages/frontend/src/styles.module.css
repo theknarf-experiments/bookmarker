@@ -1,0 +1,33 @@
+.tags i {
+	background: lightgrey;
+	border: 1px dotted grey;
+	padding: 2px;
+}
+
+.tags i + i {
+	margin-left: 3px;
+}
+
+.tags i button {
+	border: 0;
+	text-decoration: underline;
+	background: transparent;
+	cursor: pointer;
+}
+
+.tags i button:hover {
+	text-decoration: none;
+}
+
+.bookmarks {
+	max-width: 1200px;
+}
+
+.bookmarks li {
+	padding: 10px;
+}
+
+.bookmarks li > div {
+	display: flex;
+	justify-content: space-between;
+}
