@@ -1,0 +1,83 @@
+Table users {
+  id integer [primary key]
+  email varchar
+  password varchar
+  created_at timestamp
+}
+
+Table links {
+  id integer [primary key]
+  title varchar
+  note text [note: 'Optional markdown note']
+  user integer [ref: > users.id]
+}
+
+Table link_meta {
+  id integer [primary key]
+  link_id integer [ref: > links.id]
+  url varchar
+  created_at timestamp
+  lastupdated timestamp
+  meta_title varchar [note: 'Original title from meta tag']
+  meta_description varchar
+  meta_author varchar
+}
+
+// https://en.wikipedia.org/wiki/Web_ARChive
+Table link_warcs {
+  id integer [primary key]
+  hash varchar [note: 'Hash to find the warc file by']
+  created_at timestamp
+  link integer [ref: > link_meta.id]
+}
+
+Table tags {
+  name varchar [primary key]
+}
+
+Table link_tags {
+  tag varchar [ref: > tags.name]
+  link integer [ref: > links.id]
+}
+
+Table collections {
+  id integer [primary key]
+  title varchar
+  owner integer [ref: > users.id]
+  created_at timestamp
+  public boolean
+}
+
+Table collection_shared {
+  collection integer [ref: > collections.id]
+  user integer [ref: > users.id]
+  // permisions (read / write / admin)
+}
+
+Table collection_links {
+  id integer [primary key]
+  title varchar
+  note text [note: 'Optional markdown note']
+  collection integer [ref: > collections.id]
+  meta integer [ref: > link_meta.id]
+  created_at timestamp
+  lastupdated timestamp
+}
+
+Table collection_notes {
+  id integer [primary key]
+  note text [note: 'Markdown note']
+  collection integer [ref: > collections.id]
+  created_at timestamp
+  lastupdated timestamp
+}
+
+Table collection_images {
+  id integer [primary key]
+  hash varchar [note: 'Hash to find the image file by']
+  filetype varchar [note: 'original file ending']
+  note text [note: 'Optional markdown note']
+  collection integer [ref: > collections.id]
+  created_at timestamp
+  lastupdated timestamp
+}
